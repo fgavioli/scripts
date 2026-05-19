@@ -44,10 +44,22 @@ setup () {
     echo "tkenv setup complete."
 }
 
+print_help() {
+    echo "Usage: $0 {setup <size_in_GB>|open|close}"
+    echo "  setup <size_in_GB> : Create and setup the encrypted tkenv volume of specified size."
+    echo "  open               : Open and mount the tkenv volume."
+    echo "  close              : Unmount and close the tkenv volume."
+}
+
+if [ $# -lt 1 ]; then
+    print_help
+    exit 1
+fi
+
 case "$1" in
     setup)
         if [ $# -lt 2 ]; then
-            echo "Usage: $0 setup <size_in_GB>"
+            print_help
             exit 1
         fi
         setup "$2"
@@ -59,7 +71,7 @@ case "$1" in
         close
         ;;
     *)
-        echo "Usage: $0 {setup <size>|open|close}"
+        print_help
         exit 1
         ;;
 esac
